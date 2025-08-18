@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PDF Intelligence App</title>
+    
+    <!-- Adobe PDF Embed API -->
+    <script src="https://documentservices.adobe.com/view-sdk/viewer.js"></script>
+    
+    <style>
+      /* Ensure proper container sizing for Adobe viewer */
+      #adobe-dc-view {
+        height: 100% !important;
+        width: 100% !important;
+        min-height: 500px !important;
+      }
+      
+      /* Basic reset */
+      html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+      }
+      
+      #root {
+        height: 100vh;
+        width: 100vw;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+    
+    <!-- Adobe SDK Ready Handler -->
+    <script>
+      // Global handler for Adobe SDK
+      window.addEventListener('load', function() {
+        console.log('Page loaded, checking Adobe SDK...');
+        
+        // Check if Adobe SDK is available
+        const checkAdobeSDK = () => {
+          if (window.AdobeDC) {
+            console.log('Adobe DC SDK is available');
+            document.dispatchEvent(new CustomEvent('adobe_dc_view_sdk.ready'));
+          } else {
+            console.log('Adobe DC SDK not yet available, checking again...');
+            setTimeout(checkAdobeSDK, 100);
+          }
+        };
+        
+        checkAdobeSDK();
+      });
+
+      // Text selection handler for PDF viewer
+      function handleTextSelection() {
+        const selection = window.getSelection();
+        if (selection && selection.toString().trim()) {
+          const selectedText = selection.toString().trim();
+          console.log('Selected text:', selectedText);
+          
+          // Send message to parent window
+          if (window.parent && window.parent !== window) {
+            window.parent.postMessage({
+              type: 'textSelection',
+              text: selectedText
+            }, '*');
+          }
+        }
+      }
+
+      // Add event listeners for text selection
+      document.addEventListener('mouseup', handleTextSelection);
+      document.addEventListener('keyup', handleTextSelection);
+    </script>
+  </body>
+</html>
