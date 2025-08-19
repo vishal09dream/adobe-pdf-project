@@ -6,7 +6,8 @@
 **Submission Date:** August 19, 2025
 
 ## PDF Intelligence App
- FOR Preview - https://adobe-pdf-project.onrender.com/
+ For Preview - https://adobe-pdf-project.onrender.com/
+ --
 An end-to-end PDF intelligence web app that lets you upload PDFs, view and select text, run multi-document semantic search powered by Gemini embeddings, extract outlines/sections, generate insights, and even create a short podcast using Text-to-Speech. The project ships with a production-ready Docker image that builds the React (Vite) frontend and serves it via a Flask backend.
 
 ```
