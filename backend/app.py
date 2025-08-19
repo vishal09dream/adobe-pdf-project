@@ -148,6 +148,11 @@ def generate_podcast():
         
         Make it engaging, conversational, and informative.
         Include smooth transitions and a natural flow.
+        Requirements:
+        - Write only the spoken script (no stage directions, no 'Music Starts/Ends', no 'Host:' labels).
+        - Make it engaging, conversational, and informative.
+        - Use smooth transitions and a natural flow.
+        - Output plain text only.
         """
         
         response = model.generate_content(prompt)
@@ -289,6 +294,11 @@ def search_related_with_insights():
         Create a short, conversational podcast script (max 1 minute) 
         explaining the key points of the selected text and related content.
         Make it friendly and engaging.
+        Requirements:
+        - Write only the spoken script (no stage directions, no 'Music Starts/Ends', no 'Host:' labels).
+        - Make it engaging, conversational, and informative.
+        - Use smooth transitions and a natural flow.
+        - Output plain text only.
 
         Selected text: {selected_text}
         Related content: {all_related_text}
