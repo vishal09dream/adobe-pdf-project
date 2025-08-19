@@ -217,24 +217,9 @@ flowchart TD
     K --> L[Azure Text-to-Speech converts context to MP3]
     L --> M[Play or Download Audio]
 
-     %% Styling
-    classDef step fill:#000000,stroke:#333,stroke-width:1px,rx:10,ry:10;
+    %% Styling
+    classDef step fill=#000000,stroke=#ffffff,stroke-width=1px,rx=10,ry=10,color=#ffffff;
     class A,B,C,D,E,F,G,H,I,J,K,L,M step;
-
-    %% Text color styling
-    style A fill:#f4f4f4,stroke:#333,color:#ffffff
-    style B fill:#f4f4f4,stroke:#333,color:#ffffff
-    style C fill:#f4f4f4,stroke:#333,color:#ffffff
-    style D fill:#f4f4f4,stroke:#333,color:#ffffff
-    style E fill:#f4f4f4,stroke:#333,color:#ffffff
-    style F fill:#f4f4f4,stroke:#333,color:#ffffff
-    style G fill:#f4f4f4,stroke:#333,color:#ffffff
-    style H fill:#f4f4f4,stroke:#333,color:#ffffff
-    style I fill:#f4f4f4,stroke:#333,color:#ffffff
-    style J fill:#f4f4f4,stroke:#333,color:#ffffff
-    style K fill:#f4f4f4,stroke:#333,color:#ffffff
-    style L fill:#f4f4f4,stroke:#333,color:#ffffff
-    style M fill:#f4f4f4,stroke:#333,color:#ffffff
 ```
 
 ```mermaid
