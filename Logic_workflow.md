@@ -1,4 +1,3 @@
-==============================
  Adobe Hackathon 2025 – Logic & Workflow
 ==============================
 
@@ -204,27 +203,27 @@ Logic:
 ```mermaid
 flowchart TD
 
-    A[📂 Upload PDFs] --> B[📝 Extract text + headings + page numbers<br>(Task 1A logic)]
-    B --> C[🔢 Generate embeddings for all passages<br>using Gemini embeddings]
+    A[Upload PDFs] --> B[Extract text, headings, page numbers (Task 1A logic)]
+    B --> C[Generate embeddings for all passages using Gemini]
     
-    C --> D[📑 Select Text + Related PDFs<br>User selects text in PDF viewer]
-    D --> E[➡️ Send selection to Backend]
+    C --> D[Select Text + Related PDFs in PDF viewer]
+    D --> E[Send selection to Backend]
     
-    E --> F[🔍 Find Related Content<br>Gemini embedding for selected text]
-    F --> G[📊 Compare with stored embeddings in FAISS]
-    G --> H[📖 Return Top-k related passages<br>with heading + page number]
+    E --> F[Find Related Content - Gemini embedding for selected text]
+    F --> G[Compare with stored embeddings in FAISS]
+    G --> H[Return Top-k related passages with heading + page number]
 
-    H --> I[💡 Generate Insights<br>(Button Click)]
-    I --> J[🤖 Gemini LLM produces insights:<br>- Short insights<br>- Exceptions/contradictions<br>- "Did you know?" nuggets]
+    H --> I[Generate Insights (Button Click)]
+    I --> J[Gemini LLM produces insights: short facts, exceptions, contradictions, highlights]
 
-    H --> K[🎙️ Generate Podcast]
-    K --> L[🔊 Azure Text-to-Speech<br>Convert context to MP3]
-    L --> M[▶️ Play/Download Audio]
+    H --> K[Generate Podcast]
+    K --> L[Azure Text-to-Speech converts context to MP3]
+    L --> M[Play or Download Audio]
 
     %% Styling
     classDef step fill=#f4f4f4,stroke=#333,stroke-width=1px,rx=10,ry=10;
     class A,B,C,D,E,F,G,H,I,J,K,L,M step;
-```
+
 ```mermaid
 sequenceDiagram
     participant U as 👤 User
