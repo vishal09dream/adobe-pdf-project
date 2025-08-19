@@ -15,6 +15,142 @@ from services.azure_tts import AzureTTSService
 app = Flask(__name__, static_folder='static', static_url_path='')
 CORS(app)
 
+# //////////////////
+# @app.route('/')
+# def serve():
+#     return send_from_directory(app.static_folder, 'index.html')
+
+# @app.route('/api/upload', methods=['POST'])
+# def upload_pdfs():
+#     try:
+#         files = request.files.getlist('pdfs')
+#         uploaded_files = []
+        
+#         for file in files:
+#             if file and file.filename.endswith('.pdf'):
+#                 file_id = str(uuid.uuid4())
+#                 file_path = storage.save_pdf(file, file_id)
+                
+#                 # Process with 1A (heading extraction)
+#                 outline_1a = extract_outline_from_pdf(file_path)
+                
+#                 uploaded_files.append({
+#                     'id': file_id,
+#                     'name': file.filename,
+#                     'outline': outline_1a,
+#                     'upload_time': storage.get_upload_time(file_id)
+#                 })
+        
+#         return jsonify({'success': True, 'files': uploaded_files})
+#     except Exception as e:
+#         return jsonify({'success': False, 'error': str(e)}), 500
+
+# @app.route('/api/library', methods=['GET'])
+# def get_library():
+#     try:
+#         files = storage.get_all_files()
+#         return jsonify({'files': files})
+#     except Exception as e:
+#         return jsonify({'error': str(e)}), 500
+
+# @app.route('/api/process-1a/<file_id>', methods=['GET'])
+# def process_1a(file_id):
+#     try:
+#         file_path = storage.get_file_path(file_id)
+#         if not file_path:
+#             return jsonify({'error': 'File not found'}), 404
+        
+#         outline = extract_outline_from_pdf(file_path)
+#         return jsonify(outline)
+#     except Exception as e:
+#         return jsonify({'error': str(e)}), 500
+
+# @app.route('/api/process-1b', methods=['POST'])
+# def process_1b():
+#     try:
+#         data = request.json
+#         file_ids = data.get('file_ids', [])
+#         persona = data.get('persona', '')
+#         objective = data.get('objective', '')
+        
+#         if not file_ids or not persona or not objective:
+#             return jsonify({'error': 'Missing required parameters'}), 400
+        
+#         # Get file paths
+#         file_paths = []
+#         for file_id in file_ids:
+#             path = storage.get_file_path(file_id)
+#             if path:
+#                 file_paths.append(path)
+        
+#         if not file_paths:
+#             return jsonify({'error': 'No valid files found'}), 404
+        
+#         # Process with 1B
+#         results = extract_sections(file_paths, persona, objective)
+#         return jsonify(results)
+#     except Exception as e:
+#         return jsonify({'error': str(e)}), 500
+
+# @app.route('/api/insights', methods=['POST'])
+# def get_insights():
+#     try:
+#         data = request.json
+#         content = data.get('content', '')
+        
+#         model = genai.GenerativeModel('gemini-2.5-flash')
+        
+#         prompt = f"""
+#         Analyze the following content and provide insights in JSON format:
+        
+#         Content: {content}
+        
+#         Provide:
+#         1. key_insights: 3-5 main takeaways
+#         2. did_you_know: 2-3 interesting facts
+#         3. contradictions: any conflicting information
+#         4. connections: potential links to other topics
+        
+#         Return as valid JSON only.
+#         """
+        
+#         response = model.generate_content(prompt)
+#         insights = json.loads(response.text)
+        
+#         return jsonify(insights)
+#     except Exception as e:
+#         return jsonify({'error': str(e)}), 500
+# @app.route('/api/tts', methods=['POST'])
+# def tts_unified():
+#     """
+#     Unified Text-to-Speech API - Azure, Google, Local (espeak-ng)
+#     Expects:
+#       - text (str): required
+#       - voice (str): optional
+#       - provider (str): optional ("azure", "gcp", "local")
+#     Returns: Audio file as bytes (audio/mp3)
+#     """
+#     try:
+#         data = request.json
+#         text = data.get('text', '').strip()
+#         if not text:
+#             return jsonify({'error': 'Missing text parameter'}), 400
+#         voice = data.get('voice')
+#         provider = data.get('provider')  # optional, use backend default if not set
+
+#         # Generate audio file path in temp
+#         temp_dir = Path(tempfile.gettempdir())
+#         output_file = str(temp_dir / f"tts_{uuid.uuid4().hex}.mp3")
+
+#         tts_path = tts_service.generate_audio(text, output_file, provider=provider, voice=voice)
+#         if not os.path.exists(tts_path):
+#             return jsonify({'error': 'TTS synthesis failed; file not found'}), 500
+
+#         return send_file(tts_path, mimetype="audio/mp3", as_attachment=False)
+
+#     except Exception as e:
+#         return jsonify({'error': str(e)}), 500
+# ///////////////////
 # Initialize services
 storage = PDFStorage()
 
@@ -130,43 +266,73 @@ def get_insights():
         return jsonify(insights)
     except Exception as e:
         return jsonify({'error': str(e)}), 500
-
-@app.route('/api/podcast', methods=['POST'])
-def generate_podcast():
+@app.route('/api/tts', methods=['POST'])
+def tts_unified():
+    """
+    Unified Text-to-Speech API - Azure, Google, Local (espeak-ng)
+    Expects:
+      - text (str): required
+      - voice (str): optional
+      - provider (str): optional ("azure", "gcp", "local")
+    Returns: Audio file as bytes (audio/mp3)
+    """
     try:
         data = request.json
-        content = data.get('content', '')
-        insights = data.get('insights', {})
-        
-        # Generate script using Gemini
-        model = genai.GenerativeModel('gemini-2.5-flash')
-        
-        prompt = f"""
-        Create a 2-3 minute podcast script based on:
-        Content: {content}
-        Insights: {insights}
-        
-        Make it engaging, conversational, and informative.
-        Include smooth transitions and a natural flow.
-        Requirements:
-        - Write only the spoken script (no stage directions, no 'Music Starts/Ends', no 'Host:' labels).
-        - Make it engaging, conversational, and informative.
-        - Use smooth transitions and a natural flow.
-        - Output plain text only.
-        """
-        
-        response = model.generate_content(prompt)
-        script = response.text
-        
-        # For demo, return script as text file
-        temp_file = tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False)
-        temp_file.write(script)
-        temp_file.close()
-        
-        return send_file(temp_file.name, as_attachment=True, 
-                        download_name='podcast_script.txt', mimetype='text/plain')
+        text = data.get('text', '').strip()
+        if not text:
+            return jsonify({'error': 'Missing text parameter'}), 400
+        voice = data.get('voice')
+        provider = data.get('provider')  # optional, use backend default if not set
+
+        # Generate audio file path in temp
+        temp_dir = Path(tempfile.gettempdir())
+        output_file = str(temp_dir / f"tts_{uuid.uuid4().hex}.mp3")
+
+        tts_path = tts_service.generate_audio(text, output_file, provider=provider, voice=voice)
+        if not os.path.exists(tts_path):
+            return jsonify({'error': 'TTS synthesis failed; file not found'}), 500
+
+        return send_file(tts_path, mimetype="audio/mp3", as_attachment=False)
+
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+# ////////////////////////////////////////////////////////////////////////////////
+# @app.route('/api/podcast', methods=['POST'])
+# def generate_podcast():
+#     try:
+#         data = request.json
+#         content = data.get('content', '')
+#         insights = data.get('insights', {})
+        
+#         # Generate script using Gemini
+#         model = genai.GenerativeModel('gemini-2.5-flash')
+        
+#         prompt = f"""
+#         Create a 2-3 minute podcast script based on:
+#         Content: {content}
+#         Insights: {insights}
+        
+#         Make it engaging, conversational, and informative.
+#         Include smooth transitions and a natural flow.
+#         Requirements:
+#         - Write only the spoken script (no stage directions, no 'Music Starts/Ends', no 'Host:' labels).
+#         - Make it engaging, conversational, and informative.
+#         - Use smooth transitions and a natural flow.
+#         - Output plain text only.
+#         """
+        
+#         response = model.generate_content(prompt)
+#         script = response.text
+        
+#         # For demo, return script as text file
+#         temp_file = tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False)
+#         temp_file.write(script)
+#         temp_file.close()
+        
+#         return send_file(temp_file.name, as_attachment=True, 
+#                         download_name='podcast_script.txt', mimetype='text/plain')
+#     except Exception as e:
+#         return jsonify({'error': str(e)}), 500
 @app.route('/api/pdf/<file_id>')
 def serve_pdf(file_id):
     try:
