@@ -159,9 +159,6 @@ Generate insights (Gemini) or podcast (TTS) from retrieved context
 * 🎯 **Accuracy** (semantic embeddings instead of keyword search)
 * 🎧 **Engagement** (insights + podcast features)
 
-```
-
-```
 
 
 Outcome:
