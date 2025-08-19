@@ -218,23 +218,23 @@ flowchart TD
     L --> M[Play or Download Audio]
 
      %% Styling
-    classDef step fill:#f4f4f4,stroke:#333,stroke-width:1px,rx:10,ry:10;
+    classDef step fill:#000000,stroke:#333,stroke-width:1px,rx:10,ry:10;
     class A,B,C,D,E,F,G,H,I,J,K,L,M step;
 
     %% Text color styling
-    style A fill:#f4f4f4,stroke:#333,color:#000
-    style B fill:#f4f4f4,stroke:#333,color:#000
-    style C fill:#f4f4f4,stroke:#333,color:#000
-    style D fill:#f4f4f4,stroke:#333,color:#000
-    style E fill:#f4f4f4,stroke:#333,color:#000
-    style F fill:#f4f4f4,stroke:#333,color:#000
-    style G fill:#f4f4f4,stroke:#333,color:#000
-    style H fill:#f4f4f4,stroke:#333,color:#000
-    style I fill:#f4f4f4,stroke:#333,color:#000
-    style J fill:#f4f4f4,stroke:#333,color:#000
-    style K fill:#f4f4f4,stroke:#333,color:#000
-    style L fill:#f4f4f4,stroke:#333,color:#000
-    style M fill:#f4f4f4,stroke:#333,color:#000
+    style A fill:#f4f4f4,stroke:#333,color:#ffffff
+    style B fill:#f4f4f4,stroke:#333,color:#ffffff
+    style C fill:#f4f4f4,stroke:#333,color:#ffffff
+    style D fill:#f4f4f4,stroke:#333,color:#ffffff
+    style E fill:#f4f4f4,stroke:#333,color:#ffffff
+    style F fill:#f4f4f4,stroke:#333,color:#ffffff
+    style G fill:#f4f4f4,stroke:#333,color:#ffffff
+    style H fill:#f4f4f4,stroke:#333,color:#ffffff
+    style I fill:#f4f4f4,stroke:#333,color:#ffffff
+    style J fill:#f4f4f4,stroke:#333,color:#ffffff
+    style K fill:#f4f4f4,stroke:#333,color:#ffffff
+    style L fill:#f4f4f4,stroke:#333,color:#ffffff
+    style M fill:#f4f4f4,stroke:#333,color:#ffffff
 ```
 
 ```mermaid
