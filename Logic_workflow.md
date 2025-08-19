@@ -200,7 +200,7 @@ Logic:
 ```mermaid
 flowchart TD
 
-    A[Upload PDFs] --> B[Extract text, headings, page numbers (Task 1A logic)]
+    A[Upload PDFs] --> B[Extract text, headings, page numbers - Task 1A logic]
     B --> C[Generate embeddings for all passages using Gemini]
     
     C --> D[Select Text + Related PDFs in PDF viewer]
