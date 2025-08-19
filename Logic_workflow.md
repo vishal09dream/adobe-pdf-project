@@ -1,4 +1,6 @@
- Adobe Hackathon 2025 – Logic & Workflow
+
+```markdown
+Adobe Hackathon 2025 – Logic & Workflow
 ==============================
 
 This document explains the detailed logic, architecture, and workflow
@@ -57,34 +59,39 @@ Objective:
 - Replace persona filtering with semantic selection search.
 
 Logic:
-````
+```
+
 ⚙️ Core Logic of Document Intelligence Engine
 Our prototype combines document parsing, semantic search, and AI-powered insights into one system. Below is the detailed working of the core engine:
 
 ---
 
 ### 1. PDF Upload & Text Extraction
-- Users upload one or more PDFs.  
-- Each PDF is parsed using **PyMuPDF**, extracting:
-  - Page number  
-  - Heading/Sub-heading (H1, H2, etc.)  
-  - Text content  
+
+* Users upload one or more PDFs.
+* Each PDF is parsed using **PyMuPDF**, extracting:
+
+  * Page number
+  * Heading/Sub-heading (H1, H2, etc.)
+  * Text content
 
 The extracted passages are structured and stored in memory for further processing.
 
 ---
 
 ### 2. Vector Embedding Generation
-- Each extracted passage is converted into a dense vector embedding using **Google Gemini Embedding API (`models/embedding-001`)**.  
-- These embeddings capture semantic meaning of text, enabling similarity search.
+
+* Each extracted passage is converted into a dense vector embedding using **Google Gemini Embedding API (`models/embedding-001`)**.
+* These embeddings capture semantic meaning of text, enabling similarity search.
 
 **Example:**
+
 ```python
 embedding = genai.embed_content(
     model="models/embedding-001",
     content=passage["text"]
 )["embedding"]
-````
+```
 
 ---
 
@@ -159,10 +166,7 @@ Generate insights (Gemini) or podcast (TTS) from retrieved context
 * 🎯 **Accuracy** (semantic embeddings instead of keyword search)
 * 🎧 **Engagement** (insights + podcast features)
 
-```
-
-```
-
+````
 
 Outcome:
 - A flexible search system that surfaces related context without persona overhead.
@@ -206,31 +210,32 @@ flowchart TD
     A[Upload PDFs] --> B[Extract text, headings, page numbers (Task 1A logic)]
     B --> C[Generate embeddings for all passages using Gemini]
     
-    C --> D[Select Text + Related PDFs in PDF viewer]
+    C --> D[Select Text and Related PDFs in viewer]
     D --> E[Send selection to Backend]
     
-    E --> F[Find Related Content - Gemini embedding for selected text]
+    E --> F[Generate embedding for selection (Gemini)]
     F --> G[Compare with stored embeddings in FAISS]
-    G --> H[Return Top-k related passages with heading + page number]
+    G --> H[Return Top-k passages with heading + page number]
 
-    H --> I[Generate Insights (Button Click)]
-    I --> J[Gemini LLM produces insights: short facts, exceptions, contradictions, highlights]
+    H --> I[Generate Insights]
+    I --> J[Gemini produces insights: facts, contradictions, highlights]
 
     H --> K[Generate Podcast]
-    K --> L[Azure Text-to-Speech converts context to MP3]
+    K --> L[Azure TTS converts context to MP3]
     L --> M[Play or Download Audio]
 
     %% Styling
     classDef step fill=#f4f4f4,stroke=#333,stroke-width=1px,rx=10,ry=10;
     class A,B,C,D,E,F,G,H,I,J,K,L,M step;
-```
+````
+
 ```mermaid
 sequenceDiagram
-    participant U as 👤 User
-    participant B as 🖥️ Backend
-    participant G as 🤖 Gemini (Embeddings + LLM)
-    participant F as 📊 FAISS DB
-    participant T as 🎙️ Azure TTS
+    participant U as User
+    participant B as Backend
+    participant G as Gemini (Embeddings + LLM)
+    participant F as FAISS DB
+    participant T as Azure TTS
 
     %% Step 1: Upload PDFs
     U->>B: Upload PDFs
@@ -263,11 +268,17 @@ sequenceDiagram
     T-->>B: Return audio file
     B-->>U: Play/Download Podcast
 ```
-------------------------------------------------
+
+---
+
 5. Key Innovations
-------------------------------------------------
-- Combined structural parsing (1A) with semantic search (1B).
-- Shifted from persona filtering to contextual related content.
-- Introduced insight layer powered by Gemini.
-- Added podcast generation for multimodal experience.
-- Fully containerized with Docker for lightweight and fast deployment.
+
+---
+
+* Combined structural parsing (1A) with semantic search (1B).
+* Shifted from persona filtering to contextual related content.
+* Introduced insight layer powered by Gemini.
+* Added podcast generation for multimodal experience.
+* Fully containerized with Docker for lightweight and fast deployment.
+
+
