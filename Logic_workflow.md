@@ -210,7 +210,7 @@ flowchart TD
     F --> G[Compare with stored embeddings in FAISS]
     G --> H[Return Top-k related passages with heading + page number]
 
-    H --> I[Generate Insights (Button Click)]
+    H --> I[Generate Insights - Button Click]
     I --> J[Gemini LLM produces insights: short facts, exceptions, contradictions, highlights]
 
     H --> K[Generate Podcast]
