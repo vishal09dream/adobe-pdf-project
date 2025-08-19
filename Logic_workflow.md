@@ -206,7 +206,7 @@ flowchart TD
     E --> F[Find Related Content - Gemini embedding for selected text]
     F --> G[Compare with stored embeddings in FAISS]
     G --> H[Return Top-k related passages with heading + page number]
-    H --> I[Generate Insights - Button Click]
+    H --> I[Generate Insights]
     I --> J[Gemini LLM produces insights: short facts, exceptions, contradictions, highlights]
     H --> K[Generate Podcast]
     K --> L[Azure Text-to-Speech converts context to MP3]
