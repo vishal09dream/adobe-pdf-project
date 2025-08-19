@@ -199,29 +199,22 @@ Logic:
 
 ```mermaid
 flowchart TD
-
     A[Upload PDFs] --> B[Extract text, headings, page numbers - Task 1A logic]
     B --> C[Generate embeddings for all passages using Gemini]
-    
     C --> D[Select Text + Related PDFs in PDF viewer]
     D --> E[Send selection to Backend]
-    
     E --> F[Find Related Content - Gemini embedding for selected text]
     F --> G[Compare with stored embeddings in FAISS]
     G --> H[Return Top-k related passages with heading + page number]
-
     H --> I[Generate Insights - Button Click]
     I --> J[Gemini LLM produces insights: short facts, exceptions, contradictions, highlights]
-
     H --> K[Generate Podcast]
     K --> L[Azure Text-to-Speech converts context to MP3]
     L --> M[Play or Download Audio]
 
-    %% Base styling (only background + border)
-    classDef step fill=#000000,stroke=#FFFFFF,stroke-width=2px,rx=10,ry=10;
+    %% Styling - put these at the bottom
+    classDef step fill:#000000,stroke:#FFFFFF,stroke-width:2px,rx:10,ry:10;
     class A,B,C,D,E,F,G,H,I,J,K,L,M step;
-
-    %% Text color applied separately
     style A color:#FFFFFF
     style B color:#FFFFFF
     style C color:#FFFFFF
@@ -235,6 +228,7 @@ flowchart TD
     style K color:#FFFFFF
     style L color:#FFFFFF
     style M color:#FFFFFF
+
 ```
 
 ```mermaid
