@@ -217,26 +217,24 @@ flowchart TD
     K --> L[Azure Text-to-Speech converts context to MP3]
     L --> M[Play or Download Audio]
 
-    %% Base styling
+    %% Base styling (only background + border)
     classDef step fill=#000000,stroke=#FFFFFF,stroke-width=2px,rx=10,ry=10;
-
-    %% Apply base style
     class A,B,C,D,E,F,G,H,I,J,K,L,M step;
 
-    %% Text color override (white text)
-    style A fill:#000000,stroke:#FFFFFF,color:#FFFFFF
-    style B fill:#000000,stroke:#FFFFFF,color:#FFFFFF
-    style C fill:#000000,stroke:#FFFFFF,color:#FFFFFF
-    style D fill:#000000,stroke:#FFFFFF,color:#FFFFFF
-    style E fill:#000000,stroke:#FFFFFF,color:#FFFFFF
-    style F fill:#000000,stroke:#FFFFFF,color:#FFFFFF
-    style G fill:#000000,stroke:#FFFFFF,color:#FFFFFF
-    style H fill:#000000,stroke:#FFFFFF,color:#FFFFFF
-    style I fill:#000000,stroke:#FFFFFF,color:#FFFFFF
-    style J fill:#000000,stroke:#FFFFFF,color:#FFFFFF
-    style K fill:#000000,stroke:#FFFFFF,color:#FFFFFF
-    style L fill:#000000,stroke:#FFFFFF,color:#FFFFFF
-    style M fill:#000000,stroke:#FFFFFF,color:#FFFFFF
+    %% Text color applied separately
+    style A color:#FFFFFF
+    style B color:#FFFFFF
+    style C color:#FFFFFF
+    style D color:#FFFFFF
+    style E color:#FFFFFF
+    style F color:#FFFFFF
+    style G color:#FFFFFF
+    style H color:#FFFFFF
+    style I color:#FFFFFF
+    style J color:#FFFFFF
+    style K color:#FFFFFF
+    style L color:#FFFFFF
+    style M color:#FFFFFF
 ```
 
 ```mermaid
